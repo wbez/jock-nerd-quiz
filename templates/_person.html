@@ -1,0 +1,14 @@
+<div class="person" data-group="{{person.group}}">
+	<div class="question">
+		<div class="quote"><span class="soundcite" data-url="assets/{{person.slug}}.mp3" data-start="0" data-end="{{person.data_end}}" data-plays="1"></span> &ldquo;{{person.quote}}&rdquo;</div>
+		<div class="control text-center">
+			<div class="nerd">Nerd</div> or 
+			<div class="jock">Jock</div>
+		</div>
+	</div>
+	<div class="answer">
+		<img class="img-rounded" src="assets/{{person.slug}}.jpg">
+		<div class="result">WRONG!</div>
+		<div class="name"><span class="soundcite" data-url="assets/{{person.slug}}.mp3" data-start="0" data-end="{{person.data_end}}" data-plays="1"></span> That was a quote from {{person.name}}, a {{person.group}}.</div>
+	</div>
+</div>

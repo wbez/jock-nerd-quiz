@@ -1,56 +1,97 @@
 {% extends '_base.html' %}
 
 {% block header_content %}
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>{{ COPY.content.project_name|smarty }}</h1>
-                <h2>{{ COPY.content.lorem_ipsum|smarty }}</h2>
+<div class="container-fluid intro">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 title text-center">
+            <h1>{{ COPY.content.project_name_html|smarty }}</h1>
+            <div class="byline text-center">
+                {{COPY.content.byline}}
             </div>
+            <div class="subhed">{{ COPY.content.subhed|smarty }}</div>
+            <div class="clicker">Start the quiz!</div>
         </div>
     </div>
-</header>
+</div>
 {% endblock %}
 
 
 {% block content %}
-<h1>{{ COPY.content.project_name }}</h1>
-
-<div id="story-meta">
-    <p class="byline">by <span>{{ COPY.content.byline }}</span></p>
-    <p class="dateblock">
-        <span class="date">{{ COPY.content.pubdate }}</span>
-        <span class="time"> {{ COPY.content.pubtime }}</span>
-    </p>
-</div>
-
-<a class="comment-button comment-button-bubble comment-drawer-toggle" href="javascript:">
-    <span class="comment-count"></span>
-</a>
-
-<a class="comment-button comment-button-article comment-drawer-toggle" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-    <span class="comment-count"></span>
-    <span class="comment-label">Share / Discuss</span>
-</a>
-
-<h2 class="knockout-example">Example COPY list</h2>
-<dl>
-    {% for row in COPY.example_list %}
-    <dt>{{ row.term }}</dt><dd>{{ row.definition }}</dd>
+    <div class="score" data-spy="affix">
+        Score: <span class="correct">0</span> / <span class="total">0</span>
+    </div>
+    {% for person in COPY.quiz|sort(attribute='order') %}
+        {% include "_person.html" %}
     {% endfor %}
-</dl>
+    <div class="grade">
+        You got <span class="correct">0</span> out of <span class="total">0</span>: <span class="message"></span>
+        <div class="share-results">
+            Share the quiz!
+            <span class="twitter"><a rel="external" href="http://twitter.com/share?text={{ COPY.share.twitter_text|urlencode }}&amp;url={{ COPY.share.share_url|urlencode }}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'tweet', 'nav']);"><i class="fa fa-twitter"></i></a></span>
+            <span class="facebook"><a rel="external" href="https://www.facebook.com/sharer/sharer.php?u={{COPY.share.share_url}}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'facebook', 'nav']);"><i class="fa fa-facebook"></i></a></span>
+        </div>
+    </div>
 
-<h2 class="knockout-example">JST example</h2>
-<p id="template-example"></p>
 {% endblock %}
 
 
 {% block wide_content %}
-<div class="row">
-    <div class="col-md-12">
-        <h2 class="knockout-example">{{ COPY.content.footer_title }}</h2>
-        <p>{{ COPY.content.lorem_ipsum }}</p>
-    </div>
-</div>
+
 {% endblock %}
+
+{% block extra_foot %}
+<script>
+
+var messages = ['NERD FAIL','It’s ok, sometimes things are hard.','Jocks ARE nerds.','Nice try!',"Well, you're half right.",'Hey, it’s more than half.','You’re on the right track!','Almost exceptional!','99th percentile!','TOUCHDOWN!']
+var SCORE = 0;
+var ANSWERED = 0;
+var TOTAL = $('.person').length;
+$('.total').html(TOTAL);
+
+$('.jock,.nerd').click(function(){
+    ANSWERED++;
+    var $container = $(this).closest(".person");
+    var $question = $container.find(".question");
+    var $answer = $container.find(".answer");
+    var group = $container.data('group');
+    if ($(this).attr('class') == group){
+        SCORE++;
+        $('.correct').html(SCORE);
+        if (group == 'nerd') {
+            $answer.find('.result').html("Affirmative!");
+        } else {
+            $answer.find('.result').html("Score!");
+        }
+    } else {
+        if (group == 'nerd') {
+            $answer.find('.result').html("Fail!");
+        } else {
+            $answer.find('.result').html("Fumble!");
+        }
+    }
+    $question.hide(500);
+    $answer.show(500);
+    if (ANSWERED == TOTAL) {
+        $('.message').html(messages[SCORE-1]);
+        $('.grade').show();
+        $('html, body').stop().delay(1000).animate({
+            'scrollTop': $('.grade').offset().top
+        }, 900, 'swing');
+    }
+})
+
+$('.score').affix({
+    offset: {
+        top: $('.score').offset().top
+    }
+});
+
+$('.clicker').click(function(){
+    $('html, body').stop().animate({
+         'scrollTop': $('.person').offset().top-100
+    }, 900, 'swing');
+})
+
+</script>
+
+{% endblock extra_foot %}

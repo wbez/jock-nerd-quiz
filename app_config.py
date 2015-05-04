@@ -97,19 +97,19 @@ DEBUG = True
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '12IosGdoRmMaB9KQr6xZXfhuhZ0mUjauEWNe0dPPd5fs'
+COPY_GOOGLE_DOC_KEY = '1-a80CvyJ3-TIuGLNYIFjNoOOd67I8SLlyjMlA5pZoFE'
 COPY_PATH = 'data/copy.xlsx'
 
 """
 SHARING
 """
-SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET['bucket_name'], PROJECT_SLUG)
+SHARE_URL = 'http://interactive.wbez.org/nerdsjocks'
 
 """
 SERVICES
 """
 NPR_GOOGLE_ANALYTICS = {
-    'ACCOUNT_ID': 'none', #add id here
+    'ACCOUNT_ID': 'UA-369047-1', #add id here
     'DOMAIN': 'wbez.org',
     'TOPICS': '' # e.g. '[1014,3,1003,1002,1001]'
 }

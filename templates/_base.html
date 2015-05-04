@@ -13,12 +13,15 @@
     {% include '_meta.html' %}
 
     <!-- FONTS -->
-    {% include '_fonts.html' %}
 
     <!-- CSS -->
     {{ CSS.push('less/app.less') }}
+    {{ CSS.push('less/jocknerd.less') }}
     {% block extra_css %}{% endblock extra_css %}
     {{ CSS.render('css/app.min.css') }}
+    <link href='http://fonts.googleapis.com/css?family=Graduate|Bangers|Roboto:400,700|Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
+    <link href='//cdn.knightlab.com/libs/soundcite/latest/css/player.css' rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src='//cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js'></script>
 
     {% include '_social_tags.html' %}
 
@@ -52,8 +55,8 @@
       </a>
   
         <ul class="social-links">
-            <li class="twitter"><a rel="external" href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ SHARE_URL|urlencode }}" alt="Share on Twitter" target="_blank" onclick="ANALYTICS.clickTweet('nav');">Share This Page On Twitter</a></li>
-            <li class="facebook"><a rel="external" href="https://www.facebook.com/dialog/feed?app_id={{ FACEBOOK_APP_ID }}&amp;link={{ SHARE_URL|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ FACEBOOK_IMAGE_URL|urlencode }}&amp;redirect_uri={{ SHARE_URL|urlencode }}" alt="Share on Facebook" target="_blank" onclick="ANALYTICS.clickFacebook('nav');">Like This Page On Facebook</a></li>
+            <li class="twitter"><a rel="external" href="http://twitter.com/share?text={{ COPY.share.twitter_text|urlencode }}&amp;url={{ COPY.share.share_url|urlencode }}" alt="Share on Twitter" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'tweet', 'nav']);"><i class="fa fa-twitter"></i></a></li>
+            <li class="facebook"><a rel="external" href="https://www.facebook.com/sharer/sharer.php?u={{COPY.share.share_url}}" alt="Share on Facebook" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'facebook', 'nav']);"><i class="fa fa-facebook"></i></a></li>
         </ul>
 
     </nav>
@@ -64,12 +67,10 @@
     <section id="content">
         <div class="container">
             <div class="row">
-                <div id="main-content" class="col-md-8">
-                    {% block content %}
-                    <h1>{{ project_name }}</h1>
-                    App content goes here.
 
-                    <i class="icon icon-play"></i>
+                <div id="main-content" class="col-md-8 col-md-offset-2">
+                    {% block content %}
+
                     {% endblock content %}
                 </div>
 
@@ -108,7 +109,6 @@
     {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
     {{ JS.push('js/copy.js') }}
-    {{ JS.push('js/console.js') }}
     {{ JS.push('js/templates.js') }}
     {{ JS.push('js/comments.js') }}
     {{ JS.push('js/share.js') }}
