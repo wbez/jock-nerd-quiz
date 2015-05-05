@@ -111,8 +111,8 @@ var ANALYTICS = (function () {
      */
     var setupChartbeat = function() {
         /** CONFIGURATION START **/
-        _sf_async_config.uid = 18888;
-        _sf_async_config.domain = "npr.org";
+        _sf_async_config.uid = 5703;
+        _sf_async_config.domain = "interactive.wbez.org";
         /** CONFIGURATION END **/
         (function(){
             function loadChartbeat() {
